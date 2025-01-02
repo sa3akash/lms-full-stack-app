@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import {CustomError} from "../services/utils/errorHandler";
+import {CustomError} from "@services/utils/errorHandler";
 
-export const globalErrorHandler = (
+export const globalError = async (
     err: any,
     req: Request,
     res: Response,

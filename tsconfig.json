@@ -6,7 +6,7 @@
     "module": "commonjs",
     "rootDir": "./src",
     "moduleResolution": "node",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "sourceMap": true,
     "outDir": "./dist",
     "removeComments": true,
@@ -20,10 +20,12 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "paths": {
-      "@modules/*": ["./src/modules/*"],
-      "@middlewares/*": ["./src/middlewares/*"],
-      "@services/*": ["./src/services/*"],
-      "@root/*": ["./src/*"]
+      "@services/*": ["src/services/*"],
+      "@admin/*": ["src/modules/admin/*"],
+      "@teacher/*": ["src/modules/teacher/*"],
+      "@student/*": ["src/modules/student/*"],
+      "@middleware/*": ["src/middleware/*"],
+      "@root/*": ["src/*"]
     }
   },
 

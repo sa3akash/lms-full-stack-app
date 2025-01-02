@@ -1,0 +1,31 @@
+@host = localhost
+@port = 5500
+@url = http://{{host}}:{{port}}
+
+
+###
+POST http://{{url}}/api/v1/admin/register
+Content-Type: application/json
+Origin: http://localhost:3000
+
+{
+  "name":"Shakil Ahmed",
+  "password":"123456",
+  "email":"sa2@gmail.com"
+}
+
+
+###
+POST http://{{url}}/api/v1/admin/login
+Content-Type: application/json
+
+{
+  "gmail": "sa2@gmail.com",
+  "password": "123456"
+}
+
+
+###
+GET https://api.ipregistry.co/?hostname=true&key=sb69ksjcajfs4c
+Content-Type: application/json
+Origin: https://ipregistry.co

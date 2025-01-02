@@ -7,9 +7,12 @@ import hpp from 'hpp';
 import { rateLimit } from 'express-rate-limit';
 import http from 'http';
 import os from 'os';
+import "express-async-errors";
 
-import { config } from './config';
-
+import { config } from '@root/config';
+import mainRoute from '@root/routes';
+import {globalError} from "@middleware/globalError";
+import {BadRequestError} from "@services/utils/errorHandler";
 
 export class SetupServer {
     private readonly app: Application;
@@ -29,9 +32,18 @@ export class SetupServer {
         app.set('trust proxy', 1);
         app.use(
             cors({
-                origin: ['http://localhost:3000'],
+                origin: (requestOrigin, callback)=>{
+                    const allowedOrigins = [config.CLIENT_URL!];
+                    if(!requestOrigin || !allowedOrigins.includes(requestOrigin)){
+                        throw new BadRequestError('Request block by cors',400)
+                    }
+                    callback(null, allowedOrigins); // allowedOrigin or true
+                },
                 credentials: true,
-                optionsSuccessStatus: 200
+                optionsSuccessStatus: 204,
+                maxAge: 6000,
+                preflightContinue: false,
+
             })
         );
         app.use(helmet());
@@ -53,7 +65,7 @@ export class SetupServer {
     }
 
     private routesMiddleware(app: Application): void {
-        // mainRoute(app);
+        mainRoute(app);
     }
 
     private globalErrorHandler(app: Application): void {
@@ -63,7 +75,7 @@ export class SetupServer {
         app.use('*', (req, res) => {
             res.status(404).json({ message: 'Routes not found!' });
         });
-        // app.use();
+        app.use(globalError);
     }
     private startServer(app: Application): void {
         const httpServer = http.createServer(app);

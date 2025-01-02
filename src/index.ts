@@ -1,14 +1,13 @@
 import express from "express";
-import {SetupServer} from "./app";
-import {config} from "./config";
-import {dbConnect} from "./dbConnect";
+import {SetupServer} from "@root/app";
+import {config} from "@root/config";
+import {dbConnect} from "@root/dbConnect";
+import {IUserDocument} from "@admin/auth/auth.interface";
 
 declare global {
     namespace Express {
         interface Request {
-            user?: {
-                id: string;
-            };
+            user?: IUserDocument;
             sessionId?: string;
         }
     }
