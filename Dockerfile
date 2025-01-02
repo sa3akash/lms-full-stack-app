@@ -1,6 +1,6 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1 AS base
+FROM oven/bun:alpine AS base
 LABEL authors="SHAKIL"
 
 WORKDIR /usr/src/app
