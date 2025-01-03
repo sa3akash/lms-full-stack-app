@@ -9,7 +9,8 @@
     "lint:check": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "prettier:check": "prettier --check \"src/**/*.{ts,json}\"",
-    "prettier:fix": "prettier --write \"src/**/*.{ts,json}\""
+    "prettier:fix": "prettier --write \"src/**/*.{ts,json}\"",
+    "dev:dist": "nodemon --watch 'src/**' --ext 'ts,json' --exec 'bun run build && bun run start'"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +29,8 @@
     "hpp": "^0.2.3",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.2"
+    "mongoose": "^8.9.2",
+    "nodemailer": "^6.9.16"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -37,6 +39,7 @@
     "@types/express": "^5.0.0",
     "@types/hpp": "^0.2.6",
     "@types/jsonwebtoken": "^9.0.7",
+    "@types/nodemailer": "^6.4.17",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
     "eslint": "^9.17.0",

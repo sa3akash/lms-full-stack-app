@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema<IUserDocument>(
     },
     role: {
       type: String,
-      enum: ['admin', 'teacher', 'student'], // Corrected enum definition
+      enum: ['admin', 'teacher', 'student', 'moderator'],
       default: 'admin'
     },
     name: {
@@ -26,6 +26,10 @@ const UserSchema = new mongoose.Schema<IUserDocument>(
     password: {
       type: String,
       required: true
+    },
+    resetPasswordToken: {
+      type: String,
+      default: ''
     }
   },
   {

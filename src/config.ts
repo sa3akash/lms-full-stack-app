@@ -8,6 +8,10 @@ class Config {
   public JWT_SECRET = process.env.JWT_SECRET;
   public DATABASE_URL = process.env.DATABASE_URL;
   public CLIENT_URL = process.env.CLIENT_URL;
+  public ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+  public SMS_EMAIL_PASS = process.env.SMS_EMAIL_PASS;
+  public SMS_EMAIL = process.env.SMS_EMAIL;
+  public LOGO_URL = process.env.SMS_EMAIL;
 
   public validateConfig(): void {
     for (const [key, value] of Object.entries(this)) {

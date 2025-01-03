@@ -4,19 +4,17 @@ import { joiValidation } from '@middleware/joiValidation';
 import { CreateStudentSchema } from '@student/schemas/createStudent.schema';
 import { studentService } from '@services/db/student.service';
 import { BadRequestError } from '@services/utils/errorHandler';
-import { userService } from '@services/db/user.service';
 
 export class CreateStudentController {
   @auth('admin')
   @joiValidation(CreateStudentSchema)
   public async createStudent(req: Request, res: Response): Promise<void> {
-    const {} = req.body;
     const user = await studentService.getStudentById(req.body.studentId);
     if (user) {
       throw new BadRequestError('Student id already in use.', 409);
     }
 
-    const newUser = await userService.createUser(req.body);
+    const newUser = await studentService.createStudent(req.body);
 
     res.status(201).json({
       message: 'Create a student',

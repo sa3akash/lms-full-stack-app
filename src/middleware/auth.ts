@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { BadRequestError } from '@services/utils/errorHandler';
 import { jwtService } from '@services/utils/jwt.services';
-import { userService } from '@services/db/user.service';
+import { adminService } from '@services/db/admin.service';
 
-export type Role = 'admin' | 'student' | 'teacher';
+export type Role = 'admin' | 'student' | 'teacher' | 'moderator';
 
 export function auth(...roles: Role[]): MethodDecorator {
   return (target, key, descriptor: PropertyDescriptor) => {
@@ -22,7 +22,7 @@ export function auth(...roles: Role[]): MethodDecorator {
         throw new BadRequestError('invalid token', 401);
       }
 
-      const user = await userService.getUserById(tokenValue.userId);
+      const user = await adminService.getUserById(tokenValue.userId);
       if (!user) {
         throw new BadRequestError('invalid user', 404);
       }

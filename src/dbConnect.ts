@@ -14,4 +14,7 @@ export const dbConnect = () => {
   };
   connect();
   mongoose.connection.on('disconnected', connect);
+  mongoose.connection.on('error', (err) => {
+    console.log(err);
+  });
 };
