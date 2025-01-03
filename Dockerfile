@@ -1,5 +1,3 @@
-# use the official Bun image
-# see all versions at https://hub.docker.com/r/oven/bun/tags
 FROM oven/bun:alpine AS base
 LABEL authors="SHAKIL"
 
@@ -25,7 +23,6 @@ COPY . .
 
 # [optional] tests & build
 ENV NODE_ENV=production
-RUN bun test
 RUN bun run build
 
 # copy production dependencies and source code into final image
@@ -36,5 +33,5 @@ COPY --from=prerelease /usr/src/app/package.json .
 
 # run the app
 USER bun
-EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", "index.ts" ]
+EXPOSE 5500/tcp
+CMD [ "bun", "run", "start" ]
