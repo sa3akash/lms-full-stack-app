@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon -L -r tsconfig-paths/register src/index.ts",
-    "start": "pm2 start ./build/src/app.js -i 10 --attach --watch | pino-pretty -c",
+    "start": "pm2 start ./build/src/index.js -i 5 --attach --watch | pino-pretty -c",
     "build": "rimraf ./dist && tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "lint:check": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
