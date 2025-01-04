@@ -25,7 +25,7 @@ This is lms application
    ```
 3. Install the required dependencies:
     ```bash
-    bun run install
+    bun install
     ```
 
 ## Configuration
@@ -47,7 +47,7 @@ This is lms application
 To start the application, run the following command:
 
 ```bash
-bun run start
+bun run dev
 ```
 
 ## API Endpoints
