@@ -1,6 +1,5 @@
 import { IStudentDocument } from '@student/interfaces/createStudent.interface';
 import { studentModel } from '@student/models/createStudent.model';
-import { userModel } from '@admin/models/auth.model';
 
 class StudentService {
   public async createStudent(data: IStudentDocument): Promise<IStudentDocument | null> {
@@ -12,7 +11,6 @@ class StudentService {
   }
 
   public async updateStudent(id: string, data: IStudentDocument): Promise<IStudentDocument | null> {
-    const { studentId } = data;
     return studentModel.findByIdAndUpdate(
       id,
       {
@@ -27,7 +25,11 @@ class StudentService {
   }
 
   public async deleteStudent(id: string): Promise<void> {
-    await userModel.findByIdAndDelete(id);
+    await studentModel.findByIdAndDelete(id);
+  }
+
+  public async getSingle(id: string) {
+    return studentModel.findById(id);
   }
 }
 

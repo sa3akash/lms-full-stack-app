@@ -2,130 +2,101 @@ I understand that you want a cleaner presentation for the request formatting in 
 
 ---
 
-# Admin API Documentation
+# Student API Documentation
 
 This document outlines the available API endpoints for Admin functionalities, detailing request methods, formats, and expected responses.
 
-## API Endpoints Overview
 
-| Endpoint                         | Method | Description           | Request Format                               | Response Format                           |
-|----------------------------------|--------|-----------------------|----------------------------------------------|-------------------------------------------|
-| `/api/v1/admin/register`        | POST   | Register an Admin     | `json { "name": "", "password": "", "email": "", "phoneNumber": "" }` | `json { "message": "", "accessToken": "", "user": {} }` |
-| `/api/v1/admin/login`           | POST   | Login an Admin        | `json { "email": "", "password": "" }` | `json { "message": "", "accessToken": "", "user": {} }` |
-| `/api/v1/admin/forgot`          | POST   | Forgot Password       | `json { "email": "" }`                 | `json { "message": "" }`           |
-| `/api/v1/admin/reset`           | PUT    | Reset Password        | `json { "token": "", "password": "" }` | `json { "message": "" }`           |
-| `/api/v1/admin/change`          | PUT    | Change Password       | `json { "newPassword": "", "currentPassword": "" }` | `json { "message": "" }`           |
-| `/api/v1/admin/changeRole`      | PUT    | Change User Role      | `json { "role": "", "id": "" }`       | `json { "message": "", "data": {} }` |
-| `/api/v1/admin/update`          | PUT    | Update Admin Info     | `json { "name": "", "phoneNumber": "" }` | `json { "message": "", "data": {} }` |
-| `/api/v1/admin`                 | GET    | Get All Admins        | N/A                                          | `json { "message": "", "data": [] }` |
+## Detailed Endpoint Information Only Admin can create, update and delete Student
 
-## Detailed Endpoint Information
-
-### Register Admin
+### Add Student
 **Request**:
 - **Endpoint**:  
-  `POST http://{{url}}/api/v1/admin/register`
-
+  `POST http://{{url}}/api/v1/student/create`
+- **Headers**:
+  ```javascript
+  {
+    "Authorization" : "Bearer jwt-token"
+  }
+  ```
 - **Payload**:
   ```json
   {
-    "name": "Admin Name",
-    "password": "securePassword",
-    "email": "admin@example.com",
-    "phoneNumber": "1234567890"
+  "studentName":"Admin",
+  "dateOfBirth":"123456",
+  "bloodGroup":"",
+  "religion":"",
+  "fatherName":"",
+  "motherName":"",
+  "parentPhoneNumber":"",
+  "parentAddress":"",
+  "fatherProfession":"",
+  "motherProfession":"",
+  "class": ""
   }
   ```
 
 **Response**:
 ```json
 {
-  "message": "Register user successful",
-  "accessToken": "jwt token",
+  "message": "Add Student",
   "user": {
-    "id": "user_id",
+    "_id": "user_id",
     "name": "Admin Name",
-    "email": "admin@example.com"
-  }
-}
-```
-
----
-
-### Login Admin
-**Request**:
-- **Endpoint**:  
-  `POST http://{{url}}/api/v1/admin/login`
-
-- **Payload**:
-  ```json
-  {
     "email": "admin@example.com",
-    "password": "securePassword"
+    "...": "..."
+  }
+}
+```
+
+---
+
+### Update Student
+**Request**:
+- **Endpoint**:  
+  `PUT http://{{url}}/api/v1/update/:id`
+- **Headers**:
+  ```javascript
+  {
+    "Authorization": "Bearer jwt-token"
+  }
+  ```
+- **Payload**:
+  ```json
+  {
+  "studentName":"Admin",
+  "dateOfBirth":"123456",
+  "bloodGroup":"",
+  "religion":"",
+  "fatherName":"",
+  "motherName":"",
+  "parentPhoneNumber":"",
+  "parentAddress":"",
+  "fatherProfession":"",
+  "motherProfession":"",
+  "class": ""
   }
   ```
 
 **Response**:
 ```json
 {
-  "message": "Login user successful",
-  "accessToken": "jwt token",
+  "message": "Updated Student",
   "user": {
-    "id": "user_id",
+    "_id": "user_id",
     "name": "Admin Name",
-    "email": "admin@example.com"
+    "email": "admin@example.com",
+    "...": "..."
   }
 }
 ```
 
 ---
 
-### Forgot Admin Password
+### Delete Student
 **Request**:
 - **Endpoint**:  
-  `POST http://{{url}}/api/v1/admin/forgot`
-
-- **Payload**:
-  ```json
-  {
-    "email": "admin@example.com"
-  }
-  ```
-
-**Response**:
-```json
-{
-  "message": "Password reset email sent"
-}
-```
-
----
-
-### Reset Admin Password
-**Request**:
-- **Endpoint**:  
-  `PUT http://{{url}}/api/v1/admin/reset`
-
-- **Payload**:
-  ```json
-  {
-    "token": "reset_token",
-    "password": "newSecurePassword"
-  }
-  ```
-
-**Response**:
-```json
-{
-  "message": "Password reset successful"
-}
-```
-
----
-
-### Change Admin Password
-**Request**:
-- **Endpoint**:  
-  `PUT http://{{url}}/api/v1/admin/change`
+  `DELETE http://{{url}}/api/v1/delete/:id`
 
 - **Headers**:
   ```javascript
@@ -133,29 +104,26 @@ This document outlines the available API endpoints for Admin functionalities, de
     "Authorization": "Bearer jwt-token"
   }
   ```
-
 - **Payload**:
   ```json
   {
-    "newPassword": "newSecurePassword",
-    "currentPassword": "currentSecurePassword"
+    
   }
   ```
 
 **Response**:
 ```json
 {
-  "message": "Password changed successfully"
+  "message": ""
 }
 ```
 
 ---
 
-### Change Admin Role
+### Get Single Student Details
 **Request**:
 - **Endpoint**:  
-  `PUT http://{{url}}/api/v1/admin/changeRole`
-
+  `GET http://{{url}}/api/v1/single/:id`
 - **Headers**:
   ```javascript
   {
@@ -163,67 +131,25 @@ This document outlines the available API endpoints for Admin functionalities, de
   }
   ```
 
-- **Payload**:
-  ```json
-  {
-    "role": "newRole",
-    "id": "user_id"
-  }
-  ```
-
 **Response**:
 ```json
 {
-  "message": "Role updated successfully",
+  "message": "",
   "data": {
-    "id": "user_id",
-    "name": "User Name",
-    "role": "newRole"
+    "_id": "user_id",
+    "name": "Admin Name",
+    "email": "admin@example.com",
+    "...": "..."
   }
 }
 ```
 
 ---
 
-### Update Admin Information
+### Get All Student
 **Request**:
 - **Endpoint**:  
-  `PUT http://{{url}}/api/v1/admin/update`
-
-- **Headers**:
-  ```javascript
-  {
-    "Authorization": "Bearer jwt-token"
-  }
-  ```
-
-- **Payload**:
-  ```json
-  {
-    "name": "Updated Admin Name",
-    "phoneNumber": "0987654321"
-  }
-  ```
-
-**Response**:
-```json
-{
-  "message": "User information updated successfully",
-  "data": {
-    "id": "user_id",
-    "name": "Updated Admin Name",
-    "phoneNumber": "0987654321"
-  }
-}
-```
-
----
-
-### Get All Admins
-**Request**:
-- **Endpoint**:  
-  `GET http://{{url}}/api/v1/admin`
-
+  `GET http://{{url}}/api/v1/student`
 - **Headers**:
   ```javascript
   {
@@ -234,17 +160,12 @@ This document outlines the available API endpoints for Admin functionalities, de
 **Response**:
 ```json
 {
-  "message": "Admins retrieved successfully",
-  "data": [
-    {
-      "id": "user_id",
-      "name": "Admin Name",
-      "email": "admin@example.com"
-    },
-    ...
-  ]
+  "message": "",
+  "data": []
 }
 ```
+
+
 
 ---
 

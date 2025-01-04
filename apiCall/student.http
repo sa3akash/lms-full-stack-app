@@ -1,0 +1,100 @@
+@host = localhost
+@port = 5500
+@url = http://{{host}}:{{port}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzc3ZTIyMDkyMGQ2OTU5MjBhZjFkNGQiLCJpYXQiOjE3MzU5MTc3MTMsImV4cCI6MTczNTkyMTMxM30.iKlkU_r1kcQbPhDs3M0hdB6ecwSOfUXA9L52G4SZqHY
+
+
+
+###
+POST http://{{url}}/api/v1/student/create
+Content-Type: application/json
+Origin: http://localhost:3000
+
+{
+  "studentName":"Admin",
+  "dateOfBirth":"123456",
+  "bloodGroup":"",
+  "religion":"",
+  "fatherName":"",
+  "motherName":"",
+  "parentPhoneNumber":"",
+  "parentAddress":"",
+  "fatherProfession":"",
+  "motherProfession":"",
+  "class": ""
+}
+
+
+###
+POST http://{{url}}/api/v1/admin/login
+Content-Type: application/json
+Origin: http://localhost:3000
+
+{
+  "email": "desib96444@evnft.com",
+  "password": "123456"
+}
+
+###
+POST http://{{url}}/api/v1/admin/forgot
+Content-Type: application/json
+Origin: http://localhost:3000
+
+{
+  "email": "desib96444@evnft.com"
+}
+
+###
+PUT http://{{url}}/api/v1/admin/reset
+Content-Type: application/json
+Origin: http://localhost:3000
+
+{
+  "token": "oyTOqyJ2jZOSsQf6458n",
+  "password": "123456"
+}
+
+###
+PUT http://{{url}}/api/v1/admin/change
+Content-Type: application/json
+Origin: http://localhost:3000
+Authorization: Bearer {{token}}
+
+{
+  "newPassword": "123456",
+  "currentPassword": "123456"
+}
+
+###
+PUT http://{{url}}/api/v1/admin/changeRole
+Content-Type: application/json
+Origin: http://localhost:3000
+Authorization: Bearer {{token}}
+
+{
+  "role": "moderator",
+  "id": "6776803a2aee58a22ac9e1ca"
+}
+
+###
+PUT http://{{url}}/api/v1/admin/update
+Content-Type: application/json
+Origin: http://localhost:3000
+Authorization: Bearer {{token}}
+
+{
+  "name": "moderator",
+  "phoneNumber": "123456"
+}
+
+###
+GET http://{{url}}/api/v1/admin
+Content-Type: application/json
+Origin: http://localhost:3000
+Authorization: Bearer {{token}}
+
+
+###
+GET https://api.ipregistry.co/?hostname=true&key=sb69ksjcajfs4c
+Content-Type: application/json
+Origin: https://ipregistry.co
