@@ -1,6 +1,6 @@
 services:
   server:
-    image: sa2avroo/lms-server-node:latest
+    build: .
     ports:
       - 5500:5500
     env_file:

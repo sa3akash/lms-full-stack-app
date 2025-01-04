@@ -3,40 +3,39 @@ LABEL authors="SHAKIL"
 
 WORKDIR /usr/src/app
 
-# install dependencies into temp directory
-# this will cache them and speed up future builds
+# Install dependencies into a temp directory to cache them
 FROM base AS install
 RUN mkdir -p /temp/dev
 COPY package.json bun.lockb /temp/dev/
 RUN cd /temp/dev && bun install --frozen-lockfile
 
-# install with --production (exclude devDependencies)
+# Install production dependencies only
 RUN mkdir -p /temp/prod
 COPY package.json bun.lockb /temp/prod/
 RUN cd /temp/prod && bun install --frozen-lockfile --production
 
-# copy node_modules from temp directory
-# then copy all (non-ignored) project files into the image
+# Copy node_modules from temp directory
 FROM base AS prerelease
 COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
 
-# [optional] tests & build
+# Optional: tests & build
 ENV NODE_ENV=production
 RUN bun run build
 
-# copy production dependencies and source code into final image
+# Production image
 FROM base AS release
+RUN bun install -g pm2 # Install PM2 globally
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/dist ./dist
 COPY --from=prerelease /usr/src/app/package.json .
 
-# Install PM2 as root to avoid permission issues
-#USER root
-RUN bun install -g pm2
+# Set environment variables
+ENV NODE_ENV=production
+EXPOSE 5500/tcp
 
+# Change user to bun which is assumed to have necessary permissions
 #USER bun
 
-# run the app
-EXPOSE 5500/tcp
-CMD [ "bun", "run", "start" ]
+# Use PM2 to run the app with bun as the interpreter
+CMD ["pm2-runtime", "start", "dist/index.js", "--name", "my-app", "--interpreter", "bun", "-i", "5"]
