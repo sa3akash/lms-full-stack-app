@@ -25,7 +25,6 @@ RUN bun run build
 
 # Production image
 FROM base AS release
-RUN bun install -g pm2 # Install PM2 globally
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/dist ./dist
 COPY --from=prerelease /usr/src/app/package.json .
@@ -35,7 +34,7 @@ ENV NODE_ENV=production
 EXPOSE 5500/tcp
 
 # Change user to bun which is assumed to have necessary permissions
-#USER bun
+USER bun
 
-# Use PM2 to run the app with bun as the interpreter
-CMD ["pm2-runtime", "start", "dist/index.js", "--name", "my-app", "--interpreter", "bun", "-i", "5"]
+# run
+CMD ["bun", "run", "start"]
