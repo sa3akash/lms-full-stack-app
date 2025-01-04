@@ -32,11 +32,11 @@ COPY --from=prerelease /usr/src/app/dist ./dist
 COPY --from=prerelease /usr/src/app/package.json .
 
 # Install PM2 as root to avoid permission issues
-USER root
+#USER root
 RUN bun install -g pm2
 
-USER bun
+#USER bun
 
 # run the app
 EXPOSE 5500/tcp
-CMD ["sh", "-c", "bun run start"]
+CMD [ "bun", "run", "start" ]
