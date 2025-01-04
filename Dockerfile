@@ -30,8 +30,15 @@ FROM base AS release
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/dist ./dist
 COPY --from=prerelease /usr/src/app/package.json .
+
+# Install PM2 as root to avoid permission issues
+USER root
 RUN bun install -g pm2
-# run the app
 USER bun
+
+# Adjust file permissions
+RUN chown -R bun:bun ./
+
+# run the app
 EXPOSE 5500/tcp
-CMD [ "bun", "run", "start" ]
+CMD ["sh", "-c", "bun run start"]
