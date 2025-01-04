@@ -13,7 +13,7 @@ RUN cd /temp/dev && bun install --frozen-lockfile
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
 COPY package.json bun.lockb /temp/prod/
-RUN cd /temp/prod && bun install -g pm2 && bun install --frozen-lockfile --production
+RUN cd /temp/prod && bun install --frozen-lockfile --production
 
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image
@@ -30,7 +30,7 @@ FROM base AS release
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/dist ./dist
 COPY --from=prerelease /usr/src/app/package.json .
-
+RUN bun install -g pm2
 # run the app
 USER bun
 EXPOSE 5500/tcp
