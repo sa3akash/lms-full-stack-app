@@ -97,7 +97,7 @@ This document outlines the available API endpoints for Admin functionalities, de
 **Request**:
 - **Endpoint**:  
   `DELETE http://{{url}}/api/v1/delete/:id`
-
+- 
 - **Headers**:
   ```javascript
   {
@@ -106,9 +106,7 @@ This document outlines the available API endpoints for Admin functionalities, de
   ```
 - **Payload**:
   ```json
-  {
-    
-  }
+  {}
   ```
 
 **Response**:
