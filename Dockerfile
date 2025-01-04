@@ -35,6 +35,5 @@ EXPOSE 5500/tcp
 
 # Change user to bun which is assumed to have necessary permissions
 USER bun
-
 # run
 CMD ["bun", "run", "start"]

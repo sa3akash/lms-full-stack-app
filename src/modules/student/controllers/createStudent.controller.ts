@@ -4,6 +4,7 @@ import { joiValidation } from '@middleware/joiValidation';
 import { CreateStudentSchema, updateStudentSchema } from '@student/schemas/createStudent.schema';
 import { studentService } from '@services/db/student.service';
 import { BadRequestError } from '@services/utils/errorHandler';
+import { studentModel } from '@student/models/createStudent.model';
 
 const PAGE_SIZE = 10;
 
@@ -58,10 +59,35 @@ export class CreateStudentController {
     const limit: number = PAGE_SIZE * page;
 
     const allStudents = await studentService.getAllStudents(skip, limit);
+    const numberOfStudent = await studentModel.find().countDocuments();
 
     res.status(200).json({
       message: 'get all students',
-      data: allStudents
+      data: allStudents,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(numberOfStudent / PAGE_SIZE)
+    });
+  }
+
+  @auth('admin', 'moderator', 'teacher')
+  public async getStudentsByClassName(req: Request, res: Response): Promise<void> {
+    const page = Number(req.query.page) || 1;
+    const skip: number = (page - 1) * PAGE_SIZE;
+    const limit: number = PAGE_SIZE * page;
+
+    const className = req.body.className;
+    if (!className) {
+      throw new BadRequestError('Class required', 400);
+    }
+
+    const allStudents = await studentModel.find({ class: className }).skip(skip).limit(limit);
+    const numberOfStudent = await studentModel.find({ class: className }).countDocuments();
+
+    res.status(200).json({
+      message: 'get all students by class',
+      data: allStudents,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(numberOfStudent / PAGE_SIZE)
     });
   }
 
@@ -78,6 +104,24 @@ export class CreateStudentController {
     res.status(200).json({
       message: 'Get post details',
       data: user
+    });
+  }
+
+  @auth('admin', 'moderator', 'teacher')
+  public async searchStudents(req: Request, res: Response): Promise<void> {
+    const search = req.query.search;
+
+    if (!search) {
+      throw new BadRequestError('Search not found', 404);
+    }
+
+    const data = await studentModel.find({
+      $or: [{ studentId: { $regex: search } }, { studentName: { $regex: search } }]
+    });
+
+    res.status(200).json({
+      message: 'Get post details',
+      data: data
     });
   }
 }
