@@ -34,10 +34,8 @@ COPY --from=prerelease /usr/src/app/package.json .
 # Install PM2 as root to avoid permission issues
 USER root
 RUN bun install -g pm2
-USER bun
 
-# Adjust file permissions
-RUN chown -R bun:bun ./
+USER bun
 
 # run the app
 EXPOSE 5500/tcp
