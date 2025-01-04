@@ -7,6 +7,7 @@ import hpp from 'hpp';
 import http from 'http';
 import os from 'os';
 import 'express-async-errors';
+import cookieParser from 'cookie-parser';
 
 import { config } from '@root/config';
 import mainRoute from '@root/routes';
@@ -46,6 +47,7 @@ export class SetupServer {
     );
     app.use(helmet());
     app.use(hpp());
+    app.use(cookieParser());
   }
 
   private standardMiddleware(app: Application): void {
