@@ -147,7 +147,7 @@ This document outlines the available API endpoints for Admin functionalities, de
 ### Get All Student
 **Request**:
 - **Endpoint**:  
-  `GET http://{{url}}/api/v1/student`
+  `GET http://{{url}}/api/v1/student?page=1`
 - **Headers**:
   ```javascript
   {
@@ -163,8 +163,51 @@ This document outlines the available API endpoints for Admin functionalities, de
 }
 ```
 
+---
 
+
+### Get All Student By Class 
+**Request**:
+- **Endpoint**:  
+  `GET http://{{url}}/api/v1/student/className/:className?page=1`
+- **Headers**:
+  ```javascript
+  {
+    "Authorization": "Bearer jwt-token"
+  }
+  ```
+  
+**Response**:
+```json
+{
+  "message": "",
+  "data": []
+}
+```
 
 ---
+
+### Search Student By studentId or studentName 
+**Request**:
+- **Endpoint**:  
+  `GET http://{{url}}/api/v1/student/search?search=jon`
+- **Headers**:
+  ```javascript
+  {
+    "Authorization": "Bearer jwt-token"
+  }
+  ```
+  
+**Response**:
+```json
+{
+  "message": "",
+  "data": []
+}
+```
+
+---
+
+
 
 This format ensures that the request payloads are well-structured and easy to read, making the documentation clearer and more professional. Let me know if you need any further adjustments!

@@ -12,7 +12,7 @@ class StudentRoute {
     this.router.put('/update/:id', CreateStudentController.prototype.updateStudent);
     this.router.delete('/delete/:id', CreateStudentController.prototype.deleteStudent);
     this.router.get('/single/:id', CreateStudentController.prototype.getSingleStudentDetails);
-    this.router.get('/className', CreateStudentController.prototype.getStudentsByClassName);
+    this.router.get('/className/:className', CreateStudentController.prototype.getStudentsByClassName);
     this.router.get('/search', CreateStudentController.prototype.searchStudents);
     this.router.get('/', CreateStudentController.prototype.getAllStudents);
 

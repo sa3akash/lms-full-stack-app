@@ -83,8 +83,8 @@ Origin: http://localhost:3000
 Authorization: Bearer {{token}}
 
 {
-  "name": "moderator",
-  "phoneNumber": "123456"
+  "name": "",
+  "phoneNumber": ""
 }
 
 ###

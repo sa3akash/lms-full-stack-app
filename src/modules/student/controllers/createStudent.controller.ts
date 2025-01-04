@@ -75,7 +75,7 @@ export class CreateStudentController {
     const skip: number = (page - 1) * PAGE_SIZE;
     const limit: number = PAGE_SIZE * page;
 
-    const className = req.body.className;
+    const className = req.params.className;
     if (!className) {
       throw new BadRequestError('Class required', 400);
     }
