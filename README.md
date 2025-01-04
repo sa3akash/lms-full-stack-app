@@ -55,9 +55,9 @@ bun run start
 
 | Endpoint          | Method | Description    | Goto                                                                                     |
 |-------------------|--------|----------------|------------------------------------------------------------------------------------------|
-| `/api/v1/admin`   | POST   | Manage Admin   | [Click](https://github.com/sa3akash/lms-server/blob/main/src/modules/admin/admin.md)     |
-| `/api/v1/student` | POST   | Manage Student | [Click](https://github.com/sa3akash/lms-server/blob/main/src/modules/student/student.md) |
-| `/api/v1/teacher` | POST   | Manage Teacher | [Click](https://github.com/sa3akash/lms-server/blob/main/src/modules/teacher/teacher.md) |
+| `/api/v1/admin`   | POST   | Manage Admin   | [Click](https://github.com/sa3akash/lms-server/blob/main/src/modules/admin/README.md)     |
+| `/api/v1/student` | POST   | Manage Student | [Click](https://github.com/sa3akash/lms-server/blob/main/src/modules/student/README.md) |
+| `/api/v1/teacher` | POST   | Manage Teacher | [Click](https://github.com/sa3akash/lms-server/blob/main/src/modules/teacher/README.md) |
 
 
 ## Contributing
