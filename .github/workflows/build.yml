@@ -35,15 +35,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build and push bun app
+      - name: Build and push bun node app
         uses: docker/build-push-action@v3
         with:
-          context: ./
+          context: ./server
           push: true
           tags: |
             sa2avroo/lms-server-node:latest
             sa2avroo/lms-server-node:${{ github.sha }}
             sa2avroo/lms-server-node:${{ github.ref_name }}
+
+      - name: Build and push bun nextjs app
+        uses: docker/build-push-action@v3
+        with:
+          context: ./client
+          push: true
+          tags: |
+            sa2avroo/lms-client-nextjs:latest
+            sa2avroo/lms-client-nextjs:${{ github.sha }}
+            sa2avroo/lms-client-nextjs:${{ github.ref_name }}
 
       - name: Logout from Docker Hub
         run: docker logout

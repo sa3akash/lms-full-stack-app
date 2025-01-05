@@ -1,5 +1,5 @@
 node_modules
-Dockerfile.dev
+Dockerfile
 docker-compose*
 .dockerignore
 .git

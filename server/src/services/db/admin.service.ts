@@ -1,5 +1,6 @@
 import { userModel } from '@admin/models/auth.model';
 import { IUserDocument } from '@admin/interfaces/auth.interface';
+import { config } from '@root/config';
 
 class AdminService {
   public async getUserById(id: string): Promise<IUserDocument | null> {
@@ -12,7 +13,7 @@ class AdminService {
     });
   }
 
-  public async createUser({
+  public async addAdmin({
     name,
     email,
     password,
@@ -27,7 +28,28 @@ class AdminService {
       name,
       email,
       password,
-      phoneNumber
+      phoneNumber,
+      role: 'admin'
+    });
+  }
+
+  public async addModerator({
+    name,
+    email,
+    password,
+    phoneNumber
+  }: {
+    name: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+  }): Promise<IUserDocument> {
+    return userModel.create({
+      name,
+      email,
+      password,
+      phoneNumber,
+      role: 'moderator'
     });
   }
 
@@ -71,7 +93,7 @@ class AdminService {
   }
 
   public async updateAdmin(name: string, phoneNumber: string, id: string): Promise<IUserDocument | null> {
-    return userModel.findByIdAndUpdate(id, { $set: { name, phoneNumber } });
+    return userModel.findByIdAndUpdate(id, { $set: { name, phoneNumber } }, { new: true });
   }
 }
 

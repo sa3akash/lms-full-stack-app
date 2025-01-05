@@ -28,7 +28,7 @@ mainServer.initialize();
 
 process.on('uncaughtException', (err: Error) => {
   console.log(`There was an uncaught error: ${err}`);
-  process.exit(1); // Exit the process after logging the error
+  process.exit(1);
 });
 
 process.on('unhandledRejection', (reason: any) => {

@@ -1,7 +1,7 @@
 @host = localhost
 @port = 5500
 @url = http://{{host}}:{{port}}
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzc3ZTIyMDkyMGQ2OTU5MjBhZjFkNGQiLCJpYXQiOjE3MzU5MTc3MTMsImV4cCI6MTczNTkyMTMxM30.iKlkU_r1kcQbPhDs3M0hdB6ecwSOfUXA9L52G4SZqHY
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzc3ZTIyMDkyMGQ2OTU5MjBhZjFkNGQiLCJpYXQiOjE3MzYwMjcxMjMsImV4cCI6MTczNjAzMDcyM30.lb9dLbUW9ACe7cpQ6MS2WDpznsO-u9ouWL4vVWDpYtA
 
 
 
@@ -76,8 +76,8 @@ Origin: http://localhost:3000
 Authorization: Bearer {{token}}
 
 {
-  "name": "moderator",
-  "phoneNumber": "123456"
+  "name": "Shakil Ahmed",
+  "phoneNumber": "0198296526666"
 }
 
 ###

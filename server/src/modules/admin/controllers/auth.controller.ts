@@ -23,7 +23,7 @@ export class AuthController {
       throw new BadRequestError('User already exists', 400);
     }
 
-    const user = await adminService.createUser(req.body);
+    const user = await adminService.addAdmin(req.body);
 
     const accessToken = jwtService.signToken({ userId: user._id });
 
@@ -37,6 +37,34 @@ export class AuthController {
       .status(201)
       .json({
         message: 'Register user',
+        accessToken,
+        user
+      });
+  }
+
+  @auth('admin')
+  @joiValidation(SignUpSchema)
+  public async addModerator(req: Request, res: Response): Promise<void> {
+    const axistUser = await adminService.getUserByEmail(req.body.email);
+
+    if (axistUser) {
+      throw new BadRequestError('User already exists', 400);
+    }
+
+    const user = await adminService.addModerator(req.body);
+
+    const accessToken = jwtService.signToken({ userId: user._id });
+
+    res
+      .cookie('accessToken', accessToken, {
+        httpOnly: true,
+        sameSite: config.NODE_ENV === 'production' ? 'strict' : 'lax',
+        secure: false
+        // expires: new Date(Date.now() + 3600 * 60 * 60 * 1000),
+      })
+      .status(201)
+      .json({
+        message: 'add moderator',
         accessToken,
         user
       });
@@ -180,5 +208,14 @@ export class AuthController {
       message: 'updated user role',
       data: updatedUser
     });
+  }
+
+  @auth()
+  public async getCurrentData(req: Request, res: Response): Promise<void> {
+    const id = req.user?._id;
+
+    const user = await adminService.getUserById(`${id}`);
+
+    res.status(200).json(user);
   }
 }
