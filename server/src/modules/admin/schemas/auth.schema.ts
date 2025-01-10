@@ -39,11 +39,6 @@ export const SignInSchema: ObjectSchema = Joi.object().keys({
 });
 
 export const ChangePasswordSchema: ObjectSchema = Joi.object().keys({
-  email: Joi.string().required().email().messages({
-    'string.base': 'Email must be of type string.',
-    'string.email': 'Email must be valid.',
-    'string.empty': 'Email is a required field.'
-  }),
   currentPassword: Joi.string().required().messages({
     'string.base': 'Password must be of type string.',
     'string.email': 'Password must be valid.',

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import { config } from '@root/config';
-import { BadRequestError } from '@services/utils/errorHandler';
+import { ServerError } from 'error-express';
 
 export const generateToken = (length: number) => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -38,7 +38,7 @@ export const sendEmail = async (email: string, name: string, url: string) => {
       
       `
     });
-  } catch (err) {
-    throw new BadRequestError('Mail transport error');
+  } catch {
+    throw new ServerError('Mail transport error:');
   }
 };

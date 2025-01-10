@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { SubjectSchema, UpdateSubjectSchema } from '@admin/schemas/subject.schema';
 import { joiValidation } from '@middleware/joiValidation';
 import { subjectModel } from '@admin/models/subject.model';
-import { BadRequestError } from '@services/utils/errorHandler';
+import { ServerError } from 'error-express';
 
 export class SubjectController {
   @auth('admin')
@@ -16,7 +16,7 @@ export class SubjectController {
     });
 
     if (alreadySubject) {
-      throw new BadRequestError('Subject already exists', 400);
+      throw new ServerError('Subject already exists', 400);
     }
 
     const createNew = await subjectModel.create({
@@ -35,7 +35,7 @@ export class SubjectController {
   public async updateSubject(req: Request, res: Response) {
     const { id } = req.params;
     if (!id) {
-      throw new BadRequestError('Id required', 400);
+      throw new ServerError('Id required', 400);
     }
 
     const updated = await subjectModel.findByIdAndUpdate(id, {
@@ -52,7 +52,7 @@ export class SubjectController {
   public async deleteSubject(req: Request, res: Response) {
     const { id } = req.params;
     if (!id) {
-      throw new BadRequestError('Id required', 400);
+      throw new ServerError('Id required', 400);
     }
 
     await subjectModel.findByIdAndDelete(id);
@@ -67,7 +67,7 @@ export class SubjectController {
     const { id } = req.params;
 
     if (!id) {
-      throw new BadRequestError('Id required', 400);
+      throw new ServerError('Id required', 400);
     }
 
     const getSingle = await subjectModel.findById(id);

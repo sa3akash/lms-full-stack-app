@@ -23,7 +23,7 @@ node_modules
 build
 dist
 .next
-
+.idea
 
 # misc
 .DS_Store

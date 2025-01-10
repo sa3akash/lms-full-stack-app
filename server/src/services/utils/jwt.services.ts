@@ -1,6 +1,6 @@
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { config } from '@root/config';
-import { BadRequestError } from '@services/utils/errorHandler';
+import { ServerError } from 'error-express';
 
 class JwtService {
   public signToken(data: { userId: string }, expire?: string): string {
@@ -14,7 +14,7 @@ class JwtService {
       return jwt.verify(token, config.JWT_SECRET!);
     } catch (err) {
       if (err instanceof JsonWebTokenError) {
-        throw new BadRequestError(err?.message, 400);
+        throw new ServerError(err?.message, 400);
       }
     }
   }

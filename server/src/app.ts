@@ -6,13 +6,11 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import http from 'http';
 import os from 'os';
-import 'express-async-errors';
 import cookieParser from 'cookie-parser';
 
 import { config } from '@root/config';
 import mainRoute from '@root/routes';
-import { globalError } from '@middleware/globalError';
-import { BadRequestError } from '@services/utils/errorHandler';
+import { globalErrorHandler, ServerError } from 'error-express';
 
 export class SetupServer {
   private readonly app: Application;
@@ -35,7 +33,7 @@ export class SetupServer {
         origin: (requestOrigin, callback) => {
           const allowedOrigins = [config.CLIENT_URL!];
           if (!requestOrigin || !allowedOrigins.includes(requestOrigin)) {
-            throw new BadRequestError('Request block by cors', 400);
+            throw new ServerError('Request block by cors', 400);
           }
           callback(null, allowedOrigins); // allowedOrigin or true
         },
@@ -67,7 +65,7 @@ export class SetupServer {
     app.use('*', (req, res) => {
       res.status(404).json({ message: 'Routes not found!' });
     });
-    app.use(globalError);
+    app.use(globalErrorHandler);
   }
   private startServer(app: Application): void {
     const httpServer = http.createServer(app);

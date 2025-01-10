@@ -3,18 +3,18 @@ import { auth } from '@middleware/auth';
 import { joiValidation } from '@middleware/joiValidation';
 import { CreateStudentSchema, updateStudentSchema } from '@student/schemas/createStudent.schema';
 import { studentService } from '@services/db/student.service';
-import { BadRequestError } from '@services/utils/errorHandler';
 import { studentModel } from '@student/models/createStudent.model';
+import { ServerError } from 'error-express';
 
 const PAGE_SIZE = 10;
 
 export class CreateStudentController {
-  @auth('admin')
+  @auth('admin', 'moderator')
   @joiValidation(CreateStudentSchema)
   public async createStudent(req: Request, res: Response): Promise<void> {
     const user = await studentService.getStudentById(req.body.studentId);
     if (user) {
-      throw new BadRequestError('Student id already in use.', 409);
+      throw new ServerError('Student id already in use.', 409);
     }
 
     const newUser = await studentService.createStudent(req.body);
@@ -25,11 +25,11 @@ export class CreateStudentController {
     });
   }
 
-  @auth('admin')
+  @auth('admin', 'moderator')
   @joiValidation(updateStudentSchema)
   public async updateStudent(req: Request, res: Response): Promise<void> {
     if (!req.params.id) {
-      throw new BadRequestError('Id required', 400);
+      throw new ServerError('Id required', 400);
     }
     const updatedStudent = await studentService.updateStudent(req.params.id, req.body);
 
@@ -39,10 +39,10 @@ export class CreateStudentController {
     });
   }
 
-  @auth('admin')
+  @auth('admin', 'moderator')
   public async deleteStudent(req: Request, res: Response): Promise<void> {
     if (!req.params.id) {
-      throw new BadRequestError('Id required', 400);
+      throw new ServerError('Id required', 400);
     }
 
     await studentService.deleteStudent(req.params.id);
@@ -77,7 +77,7 @@ export class CreateStudentController {
 
     const className = req.params.className;
     if (!className) {
-      throw new BadRequestError('Class required', 400);
+      throw new ServerError('Class required', 400);
     }
 
     const allStudents = await studentModel.find({ class: className }).skip(skip).limit(limit);
@@ -96,7 +96,7 @@ export class CreateStudentController {
     const { id } = req.params;
 
     if (!id) {
-      throw new BadRequestError('Id required', 400);
+      throw new ServerError('Id required', 400);
     }
 
     const user = await studentService.getSingle(id);
@@ -112,7 +112,7 @@ export class CreateStudentController {
     const search = req.query.search;
 
     if (!search) {
-      throw new BadRequestError('Search not found', 404);
+      throw new ServerError('Search not found', 404);
     }
 
     const data = await studentModel.find({

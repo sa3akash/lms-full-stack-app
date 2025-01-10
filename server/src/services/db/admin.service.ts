@@ -1,6 +1,5 @@
 import { userModel } from '@admin/models/auth.model';
 import { IUserDocument } from '@admin/interfaces/auth.interface';
-import { config } from '@root/config';
 
 class AdminService {
   public async getUserById(id: string): Promise<IUserDocument | null> {
@@ -85,7 +84,7 @@ class AdminService {
   }
 
   public async getAllAdmin() {
-    return userModel.find({ $or: [{ role: 'admin' }, { role: 'moderator' }] });
+    return userModel.find({ $or: [{ role: 'admin' }, { role: 'moderator' }] }).select('-resetPasswordToken');
   }
 
   public async changeRole(role: string, id: string): Promise<IUserDocument | null> {
