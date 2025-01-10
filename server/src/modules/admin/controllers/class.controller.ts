@@ -9,18 +9,18 @@ export class ClassController {
   @auth('admin', 'moderator')
   @joiValidation(CreateSchema)
   public async create(req: Request, res: Response): Promise<void> {
-    const { studentGrade } = req.body;
+    const { className } = req.body;
 
     const existingSubject = await classModel.findOne({
-      studentGrade
+        className
     });
 
     if (existingSubject) {
-      throw new ServerError('Student already in use.', 409);
+      throw new ServerError('Class name already in use.', 409);
     }
 
     const createClass = await classModel.create({
-      studentGrade
+      className
     });
 
     res.status(200).json({
@@ -32,7 +32,7 @@ export class ClassController {
   @auth('admin', 'moderator')
   @joiValidation(CreateSchema)
   public async update(req: Request, res: Response): Promise<void> {
-    const { studentGrade } = req.body;
+    const { className } = req.body;
     const id = req.params.id;
 
     if (!id) {
@@ -42,7 +42,7 @@ export class ClassController {
     const updateClass = await classModel.findByIdAndUpdate(
       id,
       {
-        $put: { studentGrade }
+        className:className.toLowerCase()
       },
       { new: true }
     );

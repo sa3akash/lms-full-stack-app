@@ -3,11 +3,11 @@ import { IClassDocument } from '@admin/interfaces/class.interface';
 
 const ClassSchema = new mongoose.Schema<IClassDocument>(
   {
-    studentGrade: {
+      className: {
       type: String,
       required: true,
       unique: true,
-      index: true
+      lowercase: true,
     }
   },
   {
@@ -15,4 +15,4 @@ const ClassSchema = new mongoose.Schema<IClassDocument>(
   }
 );
 
-export const classModel = mongoose.model('Class', ClassSchema, 'Class');
+export const classModel = mongoose.model('ClassName', ClassSchema, 'ClassName');

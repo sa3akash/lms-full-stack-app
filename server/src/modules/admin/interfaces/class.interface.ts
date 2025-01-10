@@ -1,6 +1,6 @@
 export interface IClassDocument {
   _id: string;
-  studentGrade: string;
+  className: string;
 }
 
 export interface ISubjectDocument {

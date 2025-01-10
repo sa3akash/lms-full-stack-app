@@ -14,7 +14,7 @@ class JwtService {
       return jwt.verify(token, config.JWT_SECRET!);
     } catch (err) {
       if (err instanceof JsonWebTokenError) {
-        throw new ServerError(err?.message, 400);
+        throw new ServerError(err?.message, 401);
       }
     }
   }

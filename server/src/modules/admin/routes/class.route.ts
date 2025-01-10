@@ -9,10 +9,10 @@ class ClassRoute {
 
   public routes(): express.Router {
     this.router.post('/create', ClassController.prototype.create);
-    this.router.put('/update', ClassController.prototype.update);
+    this.router.put('/update/:id', ClassController.prototype.update);
     this.router.delete('/delete/:id', ClassController.prototype.delete);
-    this.router.get('/get/:id', ClassController.prototype.getSingle);
     this.router.get('/get/all', ClassController.prototype.getAll);
+    this.router.get('/get/:id', ClassController.prototype.getSingle);
 
     return this.router;
   }
