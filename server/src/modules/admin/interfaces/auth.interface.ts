@@ -1,4 +1,5 @@
 import { Role } from '@middleware/auth';
+import { ObjectId } from 'mongoose';
 
 export interface IUserDocument {
   _id: string;
@@ -16,5 +17,5 @@ export interface IUserDocument {
 export interface ISubjectDocument {
   _id: string;
   subjectName: string;
-  grade: string;
+  classId: string | ObjectId;
 }

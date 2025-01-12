@@ -9,7 +9,7 @@ export class SubjectController {
   @auth('admin')
   @joiValidation(SubjectSchema)
   public async addSubject(req: Request, res: Response) {
-    const { subjectName, grade } = req.body;
+    const { subjectName, classId } = req.body;
 
     const alreadySubject = await subjectModel.findOne({
       subjectName: subjectName
@@ -21,7 +21,7 @@ export class SubjectController {
 
     const createNew = await subjectModel.create({
       subjectName,
-      grade
+      classId
     });
 
     res.status(201).json({
@@ -85,6 +85,63 @@ export class SubjectController {
     res.status(200).json({
       message: 'get single subject',
       data: getAll
+    });
+  }
+
+  @auth('admin', 'moderator', 'teacher')
+  public async getAllSubjectBySubjectName(req: Request, res: Response) {
+    const { subjectName } = req.params;
+    if (!subjectName) {
+      throw new ServerError('subjectName required', 400);
+    }
+    const getAll = await subjectModel.find({ subjectName }).populate('classId');
+
+    res.status(200).json({
+      message: 'get all by subject name subject',
+      data: getAll
+    });
+  }
+
+  @auth('admin', 'moderator', 'teacher')
+  public async getAllByClassNameName(req: Request, res: Response) {
+    const { className } = req.params;
+    if (!className) {
+      throw new ServerError('subjectName required', 400);
+    }
+
+    const result = await subjectModel.aggregate([
+      {
+        $lookup: {
+          from: 'ClassName',
+          localField: 'classId',
+          foreignField: '_id',
+          as: 'classInfo'
+        }
+      },
+      {
+        $unwind: {
+          path: '$classInfo',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $match: {
+          'classInfo.className': className.toLowerCase()
+        }
+      },
+      {
+        // Project the necessary fields
+        $project: {
+          _id: 1,
+          subjectName: 1
+          // 'classInfo.className': 1
+        }
+      }
+    ]);
+
+    res.status(200).json({
+      message: 'all by class name subject',
+      data: result
     });
   }
 }

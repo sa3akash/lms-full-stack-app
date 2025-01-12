@@ -6,11 +6,11 @@ const SubjectSchema = new mongoose.Schema<ISubjectDocument>(
     subjectName: {
       type: String,
       required: true,
-      unique: true,
-      index: true
+      unique: true
     },
-    grade: {
-      type: String,
+    classId: {
+      type: mongoose.Types.ObjectId,
+      ref: 'ClassName',
       required: true
     }
   },

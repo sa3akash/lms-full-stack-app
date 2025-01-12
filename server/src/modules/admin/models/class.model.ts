@@ -3,11 +3,11 @@ import { IClassDocument } from '@admin/interfaces/class.interface';
 
 const ClassSchema = new mongoose.Schema<IClassDocument>(
   {
-      className: {
+    className: {
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
+      lowercase: true
     }
   },
   {

@@ -12,7 +12,7 @@ export class ClassController {
     const { className } = req.body;
 
     const existingSubject = await classModel.findOne({
-        className
+      className
     });
 
     if (existingSubject) {
@@ -42,7 +42,7 @@ export class ClassController {
     const updateClass = await classModel.findByIdAndUpdate(
       id,
       {
-        className:className.toLowerCase()
+        className: className.toLowerCase()
       },
       { new: true }
     );
